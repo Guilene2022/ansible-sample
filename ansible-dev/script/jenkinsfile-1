@@ -31,6 +31,7 @@ pipeline {
                 }
             }
         }
+       
 
         stage('SonarQube Analysis') {
             steps {
@@ -49,7 +50,7 @@ pipeline {
                 }
             }
         }
-    }
+    
  
         stage('Zip Ansible Playbook') {
             steps {
@@ -89,4 +90,4 @@ pipeline {
             cleanWs()
         }
     }
-
+}
