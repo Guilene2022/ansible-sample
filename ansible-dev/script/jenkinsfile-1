@@ -12,6 +12,7 @@ pipeline {
         ANSIBLE_PATH = '/home/ec2-user/ansible-dev'
         SONARQUBE_URL = 'https://sonarcloud.io/'
         SONARQUBE_ORG = 'guilene2022'
+        SCANNER_HOME = '/opt/sonar-scanner/bin' // Correct path to sonar-scanner
         SONARQUBE_PROJECT_KEY = 'Guilene2022_ansible-sample'
         SONARQUBE_TOKEN = credentials('sonarcloud-token')     // Store your SonarCloud token in Jenkins credentials
 
