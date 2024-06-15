@@ -1,5 +1,7 @@
 pipeline {
     agent {label 'linux'}
+    
+    
     environment {
         
         GIT_REPO = 'https://github.com/Guilene2022/ansible-sample.git'
@@ -15,7 +17,7 @@ pipeline {
         SONARQUBE_TOKEN = credentials('sonarcloud-token') // Store your SonarCloud token in Jenkins credentials
 
     }
-    }
+    
     
     tools {
         sonarQubeScanner 'Sonarqube' // Name of the SonarQube scanner configured in Jenkins
@@ -47,7 +49,7 @@ pipeline {
                 }
             }
         }
-
+    }
     stages {
         stage('Zip Ansible Playbook') {
             steps {
