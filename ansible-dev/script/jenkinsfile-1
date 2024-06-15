@@ -1,12 +1,53 @@
 pipeline {
     agent {label 'linux'}
     environment {
+        
+        GIT_REPO = 'https://github.com/Guilene2022/ansible-sample.git'
+        GIT_BRANCH = 'main'
         ARTIFACTORY_URL = 'http://54.236.188.125:8081'
         ARTIFACTORY_CREDENTIALS = 'jfrog-id' // Jenkins credentials ID for JFrog
         ANSIBLE_SERVER = 'ec2-52-204-133-179.compute-1.amazonaws.com'
         SSH_CREDENTIALS = 'Ansible' // Jenkins credentials ID for SSH to the Ansible server
         ANSIBLE_PATH = '/home/ec2-user/ansible-dev'
+        SONARQUBE_URL = 'https://sonarcloud.io/'
+        SONARQUBE_ORG = 'guilene2022'
+        SONARQUBE_PROJECT_KEY = 'Guilene2022_ansible-sample'
+        SONARQUBE_TOKEN = credentials('sonarcloud-token') // Store your SonarCloud token in Jenkins credentials
+
     }
+    }
+    
+    tools {
+        sonarQubeScanner 'Sonarqube' // Name of the SonarQube scanner configured in Jenkins
+    }
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                retry(3) {
+                    git branch: "${GIT_BRANCH}", url: "${GIT_REPO}"
+                }
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('Sonarqube') {
+                    script {
+                        def scannerHome = tool 'Sonarqube'
+                        sh """
+                            ${scannerHome}/bin/sonar-scanner \
+                            -Dsonar.organization=${SONARQUBE_ORG} \
+                            -Dsonar.projectKey=${SONARQUBE_PROJECT_KEY} \
+                            -Dsonar.sources=. \
+                            -Dsonar.host.url=${SONARQUBE_URL} \
+                            -Dsonar.login=${SONARQUBE_TOKEN}
+                        """
+                    }
+                }
+            }
+        }
+
     stages {
         stage('Zip Ansible Playbook') {
             steps {
