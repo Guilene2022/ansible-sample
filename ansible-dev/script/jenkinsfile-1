@@ -1,9 +1,9 @@
 pipeline {
-    agent {label linux}
+    agent {label 'linux'}
     environment {
         ARTIFACTORY_URL = 'http://54.236.188.125:8081'
         ARTIFACTORY_CREDENTIALS = 'jfrog-id' // Jenkins credentials ID for JFrog
-        ANSIBLE_SERVER = 'ec2-54-209-229-0.compute-1.amazonaws.com'
+        ANSIBLE_SERVER = 'ec2-52-204-133-179.compute-1.amazonaws.com'
         SSH_CREDENTIALS = 'Ansible' // Jenkins credentials ID for SSH to the Ansible server
         ANSIBLE_PATH = '/home/ec2-user/ansible-dev'
     }
