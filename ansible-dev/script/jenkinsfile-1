@@ -20,7 +20,7 @@ pipeline {
     
     
     tools {
-        sonarQubeScanner 'Sonarqube' // Name of the SonarQube scanner configured in Jenkins
+        sonarQube 'Sonarqube' // Name of the SonarQube scanner configured in Jenkins
     }
 
     stages {
